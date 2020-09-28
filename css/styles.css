@@ -9,6 +9,7 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+
 #map {
   width: 100%;
   height: 100%;
@@ -90,8 +91,9 @@ body {
 }
 
 .side-bar {
+  position: relative;
   background-color: #ffffff;
-	box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.5);
   padding: 50px 10px 0px 10px;
   height: 100vh;
   width: 370px;
@@ -125,60 +127,6 @@ body {
 #side-bar-date > h4 {
   font-style: italic;
 }
-/*
-.side-bar {
-  height: 100vh;
-  width: 80px;
-  z-index: 1;
-  background: #FFFFFF;
-  overflow: hidden;
-  float: left;
-  padding: 0;
-  margin: 0 auto;
-}
-
-.side-bar input {
-  margin: 0;
-  padding: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.side {
-  margin-left: 0;
-}
-
-.side-bar input:active+.flag {
-  opacity: 0.9;
-}
-
-.side-bar input:checked+.flag {
-  -webkit-filter: none;
-  -moz-filter: none;
-  filter: none;
-}
-
-.btn {
-  width: 64px;
-  height: 64px;
-  float: left;
-  padding: 10;
-  background-size: 32px 32px;
-  z-index: 10;
-  display: block;
-  cursor: pointer;
-}
-
-.btn:before {
-  content: url(/img/side-bar-icon.png);
-}
-
-.btnc:before {
-  content: url(/img/close.png);
-  transition: 0.5s;
-}
-*/
 
 /*TOOLTIP CSS*/
 .tooltip-container {
