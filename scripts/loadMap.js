@@ -56,11 +56,11 @@ map.on('load', function() {
 
     map.on('mousemove', 'polygon-layer-fill', function(e) {
         if (e.features.length > 0) {
-            //Single out the first found feature.
+            //Get the feature (country) the user is currently hovering over.
             var feature = e.features[0];
             var countrySlug = feature.properties.slug;
+            //Check if user is still hovering over the same feature to prevent multiple requests for the same feature
             if (!(feature.properties.name == previousFeature.properties.name)) {
-                console.log(feature.properties.slug);
                 getBasicDataFromBackend(countrySlug);
             }
             previousFeature = feature;
@@ -102,15 +102,14 @@ function getBasicDataFromBackend(countrySlug) {
     var fromDate = getFromDate();
 
     const option = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                slug: countrySlug,
-                from: fromDate,
-                to: toDate
-            })
-        }
-        //console.log(option);
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            slug: countrySlug,
+            from: fromDate,
+            to: toDate
+        })
+    }
     fetch(url + '/basic', option)
         .then(response => {
             if (!response.ok) {
@@ -120,14 +119,13 @@ function getBasicDataFromBackend(countrySlug) {
         })
         .then(data => {
             basicData = data;
-            //console.log(basicData); // LOOK INTO THIS
-            evaluateBasicData(basicData);
+            printBasicData(basicData);
         }).catch(error => {
             console.log(error);
         });
 }
 
-function evaluateBasicData(data) {
+function printBasicData(data) {
     var country = '<h3>' + data.Country + '</h3>'
     var template = '';
 
@@ -164,13 +162,13 @@ function getPremiumDataFromBackend(countrySlug) {
         .then(data => {
             premiumData = data;
             //console.log(premiumData);
-            evaluatePremiumData(premiumData);
+            printPremiumData(premiumData);
         }).catch(error => {
             console.log(error);
         });
 }
 
-function evaluatePremiumData(data) {
+function printPremiumData(data) {
     //data = data[data.length - 1];
     var country = '<h3>' + data.Country + '</h3>'
     var date = '<h4>' + new Date(data.Date).toLocaleDateString() + '</h4>';
@@ -208,13 +206,13 @@ function getCountryDataFromBackend(countrySlug) {
         .then(data => {
             countryData = data;
             //console.log(countryData);
-            evaluateCountryData(countryData);
+            printCountryData(countryData);
         }).catch(error => {
             console.log(error);
         });
 }
 
-function evaluateCountryData(data) {
+function printCountryData(data) {
     var template = '';
 
     template += '<li><strong>Population: </strong>' + data.Population + '</li>';
@@ -240,11 +238,6 @@ function getFromDate() {
     //console.log('From: ' + fromDate);
     return fromDate;
 }
-
-const geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl
-});
 
 function search() {
     var queryString = document.getElementById('input').value.toLowerCase();
